@@ -22,17 +22,27 @@
     <link href="signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
-    <div class="login">
-      <h1>Create an account</h1>
+    <div class="createaccount">
+      <h1>NEW USER</h1>
       <form action="/createUser" method="POST">
           <input type="text" name="name" class="name" placeholder="First and Last Name" required="required" />
           <input type="email" name="email" class="email" placeholder="E-Mail" required="required" />
           <input type="text" name="username" class="username" placeholder="Username" required="required" />
           <input type="password" name="password" class="password" placeholder="Password" required="required" />
           <input type="number" name="age" class="age" placeholder="Age" required="required" />
-          <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up!</button>
+          <button type="submit" class="btn btn-primary btn-block btn-large" onclick="toggleText()">Sign me up!</button>
+          <p id='created' style='display: none'>Account has been created!</p>
       </form>
   </div>
-</form>
+<script>
+  function toggleText() {
+  var text = document.getElementById("created");
+  if (text.style.display === "none") {
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
+</script>
 </body>
 </html>

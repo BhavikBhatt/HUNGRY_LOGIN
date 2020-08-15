@@ -9,6 +9,7 @@ import (
     "go.mongodb.org/mongo-driver/mongo"
     "go.mongodb.org/mongo-driver/mongo/options"
 	"services"
+	"strconv"
 )
 
 
@@ -34,28 +35,54 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
         fmt.Fprintf(w, "ParseForm() err: %v", err)
         return
     }
-    //fmt.Fprintln(w, "POST request successful")
+
     username := r.FormValue("username")
     password := r.FormValue("password")
 
 	authenticated := services.Authenticate(ctx, usersCollection, username, password)
 
 	if len(authenticated.Username) > 0 {
-		fmt.Fprintf(w, "Welcome %s!", authenticated.Name)
+		fmt.Fprintf(w, "Welcome %s!\n", authenticated.Name)
+		fmt.Fprintf(w, "Check logs file for user and authentication information.")
 	} else {
-		fmt.Fprintf(w, "Wrong Password! :(")
+		fmt.Fprintf(w, "Wrong username and/or password.\n")
+		fmt.Fprintf(w, "Check logs file for user and authentication information.")
 	}
-	// if authenticated {
-	// 	fmt.Fprintf(w, "AUTHENTICATED! :)")
-	// 	http.Redirect(w, r, "/site/hi", http.StatusSeeOther)
-	// } else {
-	// 	fmt.Fprintf(w, "WRONG PASSWORD :(")
-	// }
 }
 
 func createUserHandler(w http.ResponseWriter, r *http.Request) {
 
+    if r.URL.Path != "/createUser" {
+        http.Error(w, "404 not found.", http.StatusNotFound)
+        return
+    }
 
+    if err := r.ParseForm(); err != nil {
+        fmt.Fprintf(w, "ParseForm() err: %v", err)
+        return
+	}
+	
+    username := r.FormValue("username")
+	password := r.FormValue("password")
+	name := r.FormValue("name")
+	age := r.FormValue("age")
+	email := r.FormValue("email")
+
+	ciphertext := services.Encrypt([]byte(password), "so hungry")
+	intage, _ := strconv.Atoi(age)
+    newUser := MongoFields{
+        Username: username,
+		Ciphertext: string(ciphertext),
+		Email: email,
+		Name: name,
+		Age: intage,
+	}
+	
+	res, err := usersCollection.InsertOne(ctx, newUser)
+	if err != nil {
+		fmt.Println("InsertOne ERROR:", err)
+	}
+	_ = res
 
 }
 
@@ -80,7 +107,8 @@ func main() {
     _ = usersCollection
     fileServer := http.FileServer(http.Dir("./site"))
     http.Handle("/", fileServer)
-    http.HandleFunc("/form", formHandler)
+	http.HandleFunc("/form", formHandler)
+	http.HandleFunc("/createUser", createUserHandler)
 
     fmt.Printf("Starting server at port 8080\n")
     if err := http.ListenAndServe(":8080", nil); err != nil {
