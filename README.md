@@ -2,7 +2,7 @@
 
 ## My first go at Go!
 
-This is a login webapp created with a Mongo-backed Go web server. The instructions to start the server are below, along with a few accounts that are already created. 
+This is a login webapp created with a Mongo-backed Go web server. Authentication is supported with AES encryption/decryption. User objects are stored in a MongoDB Atlas database. The instructions to start the server are below, along with a few accounts that are already created. 
 
 ### Local Workspace Setup
 1. Clone this repo into your local workspace
@@ -15,4 +15,4 @@ This is a login webapp created with a Mongo-backed Go web server. The instructio
 3. Check the logins.log file in your local workspace to see the event logged. 
 
 
-### Step 3
+### Create a new user
