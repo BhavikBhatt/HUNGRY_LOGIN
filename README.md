@@ -12,7 +12,10 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
 ### Trying it out!
 1. After starting the server, navigate to `localhost:8080` in any browser
 2. Log in with one of the users displayed below
-3. Check the logins.log file in your local workspace to see the event logged. 
-
+3. Check the logins.log file in your local workspace to see the event logged
 
 ### Create a new user
+1. Click the `New User?` button on the main login page
+2. Fill out the new user form
+3. Go back to `localhost:8080` and try to login with your new account!
+4. You can also check the new.log file to see the details of the added user
