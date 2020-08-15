@@ -18,10 +18,20 @@
         }
       }
     </style>
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
     <div class="login">
-      <h1>Login</h1>
+      <h1>Create an account</h1>
+      <form action="/createUser" method="POST">
+          <input type="text" name="name" class="name" placeholder="First and Last Name" required="required" />
+          <input type="email" name="email" class="email" placeholder="E-Mail" required="required" />
+          <input type="text" name="username" class="username" placeholder="Username" required="required" />
+          <input type="password" name="password" class="password" placeholder="Password" required="required" />
+          <input type="number" name="age" class="age" placeholder="Age" required="required" />
+          <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up!</button>
+      </form>
   </div>
 </form>
 </body>

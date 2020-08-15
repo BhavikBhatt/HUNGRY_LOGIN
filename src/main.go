@@ -9,7 +9,6 @@ import (
     "go.mongodb.org/mongo-driver/mongo"
     "go.mongodb.org/mongo-driver/mongo/options"
 	"services"
-	"reflect"
 )
 
 
@@ -41,14 +40,25 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 
 	authenticated := services.Authenticate(ctx, usersCollection, username, password)
 
-	if authenticated {
-		//fmt.Fprintf(w, "AUTHENTICATED! :)")
-		http.Redirect(w, r, "google.com", http.StatusSeeOther)
+	if len(authenticated.Username) > 0 {
+		fmt.Fprintf(w, "Welcome %s!", authenticated.Name)
 	} else {
-		fmt.Fprintf(w, "WRONG PASSWORD :(")
+		fmt.Fprintf(w, "Wrong Password! :(")
 	}
+	// if authenticated {
+	// 	fmt.Fprintf(w, "AUTHENTICATED! :)")
+	// 	http.Redirect(w, r, "/site/hi", http.StatusSeeOther)
+	// } else {
+	// 	fmt.Fprintf(w, "WRONG PASSWORD :(")
+	// }
+}
+
+func createUserHandler(w http.ResponseWriter, r *http.Request) {
+
+
 
 }
+
 
 func main() {
 
@@ -68,7 +78,6 @@ func main() {
 
     _ = hungryUsersDatabase
     _ = usersCollection
-	fmt.Println(reflect.TypeOf(ctx))
     fileServer := http.FileServer(http.Dir("./site"))
     http.Handle("/", fileServer)
     http.HandleFunc("/form", formHandler)

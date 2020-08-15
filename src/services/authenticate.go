@@ -15,22 +15,22 @@ type MongoFields struct {
 	Age int `json:"Field Int"`
 }
 
-func Authenticate(ctx context.Context, users *mongo.Collection, username string, password string) (res bool) {
+func Authenticate(ctx context.Context, users *mongo.Collection, username string, password string) (res MongoFields) {
 
 	result := MongoFields{}
 
 	filterCursor := users.FindOne(ctx, bson.M{"username": username}).Decode(&result)
 	_ = filterCursor
-	fmt.Println(filterCursor)
+
 	if filterCursor == nil {
 		resultpass := Decrypt([]byte(result.Ciphertext), "so hungry")
 		if string(resultpass) == password {
-			res = true
+			res = result
 		} else {
-			res = false
+			res = MongoFields{}
 		}	
 	} else {
-		res = false
+		res = MongoFields{}
 	}
 
 	return
