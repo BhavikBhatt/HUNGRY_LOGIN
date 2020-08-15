@@ -19,3 +19,16 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
 2. Fill out the new user form
 3. Go back to `localhost:8080` and try to login with your new account!
 4. You can also check the new.log file to see the details of the added user
+
+
+User 1
+  username: bhavikbhatt
+  password: bhattbhavik23
+  
+User 2
+  username: jayz
+  password: zjay50
+
+User 3
+  username: kevinhart
+  password: hartkevin41
