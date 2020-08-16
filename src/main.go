@@ -46,7 +46,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(authenticated.Username) > 0 {
 		fmt.Fprintf(w, "Welcome %s! You are authenticated!\n", authenticated.Name)
-		fmt.Fprintf(w, "Username: %s\n", authenticated.Name)
+		fmt.Fprintf(w, "Username: %s\n", authenticated.Username)
 		fmt.Fprintf(w, "Email: %s\n", authenticated.Email)
 		fmt.Fprintf(w, "Age: %d\n", authenticated.Age)
 		logger.Println("Successful login by ", username)
@@ -91,7 +91,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	result := models.User{}
 	filterCursor := usersCollection.FindOne(ctx, bson.M{"username": username}).Decode(&result)
 	_ = filterCursor
-	
+
 	if filterCursor == nil {
 		fmt.Fprintf(w, "Username already exists!\n")
 		fmt.Fprintf(w, "Go back to create a unique account.\n")
