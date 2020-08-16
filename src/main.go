@@ -10,6 +10,8 @@ import (
     "go.mongodb.org/mongo-driver/mongo/options"
 	"services"
 	"strconv"
+	"time"
+	"os"
 )
 
 
@@ -82,6 +84,15 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("InsertOne ERROR:", err)
 	}
+
+    f, err := os.Open("site/index.html")
+    if err != nil {
+		// handle error
+        return
+	}
+	time.Sleep(4 * time.Second)
+    http.ServeContent(w, r, "site/index.html", time.Now(), f)
+
 	_ = res
 
 }
