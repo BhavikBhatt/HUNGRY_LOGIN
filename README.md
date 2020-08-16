@@ -16,8 +16,8 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
 
 ### Create a new user
 1. Click the `New User?` button on the main login page
-2. Fill out the new user form
-3. Go back to `localhost:8080` and try to login with your new account!
+2. Fill out the new user form and click `Sign me up!` (should redirect to login page)
+3. Try logging in with the new account
 4. You can also check the new.log file to see the details of the added user
 
 
