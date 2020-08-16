@@ -45,6 +45,9 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(authenticated.Username) > 0 {
 		fmt.Fprintf(w, "Welcome %s! You are authenticated!\n", authenticated.Name)
+		fmt.Fprintf(w, "Username: %s\n", authenticated.Name)
+		fmt.Fprintf(w, "Email: %s\n", authenticated.Email)
+		fmt.Fprintf(w, "Age: %d\n", authenticated.Age)
 		logger.Println("Successful login by ", username)
 
 	} else {
