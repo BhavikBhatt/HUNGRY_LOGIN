@@ -12,16 +12,8 @@ import (
 	"strconv"
 	"time"
 	"os"
+	"models"
 )
-
-
-type MongoFields struct {
-    Username string `json:"Field Str"`
-	Ciphertext string `json:"Field Str"`
-	Email string `json:"Field Str"`
-	Name string `json:"Field Str"`
-	Age int `json:"Field Int"`
-}
 
 var ctx context.Context
 var usersCollection *mongo.Collection
@@ -36,7 +28,15 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
     if err := r.ParseForm(); err != nil {
         fmt.Fprintf(w, "ParseForm() err: %v", err)
         return
-    }
+	}
+	
+	f, err := os.OpenFile("./logs/logins.log",
+	os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+	logger := log.New(f, "prefix", log.LstdFlags)
 
     username := r.FormValue("username")
     password := r.FormValue("password")
@@ -44,12 +44,16 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	authenticated := services.Authenticate(ctx, usersCollection, username, password)
 
 	if len(authenticated.Username) > 0 {
-		fmt.Fprintf(w, "Welcome %s!\n", authenticated.Name)
-		fmt.Fprintf(w, "Check logs file for user and authentication information.")
+		fmt.Fprintf(w, "Welcome %s! You are authenticated!\n", authenticated.Name)
+		logger.Println("Successful login by ", username)
+
 	} else {
 		fmt.Fprintf(w, "Wrong username and/or password.\n")
-		fmt.Fprintf(w, "Check logs file for user and authentication information.")
+		logger.Println("Unsuccessful login attempt by ", username)
 	}
+	fmt.Fprintf(w, "Check logs file for user and authentication information.\n")
+	fmt.Fprintf(w, "Press back to go back to the login page.")
+
 }
 
 func createUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +76,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	ciphertext := services.Encrypt([]byte(password), "so hungry")
 	intage, _ := strconv.Atoi(age)
-    newUser := MongoFields{
+    newUser := models.User{
         Username: username,
 		Ciphertext: string(ciphertext),
 		Email: email,
@@ -85,8 +89,18 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("InsertOne ERROR:", err)
 	}
 
-    f, err := os.Open("site/index.html")
-    if err != nil {
+	f, err := os.OpenFile("./logs/new_users.log",
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+
+	logger := log.New(f, "prefix", log.LstdFlags)
+	logger.Println("New User added at ", time.Now(), res.InsertedID,  newUser.Username, newUser.Name, newUser.Email)
+
+    f, err2 := os.Open("site/index.html")
+    if err2 != nil {
 		// handle error
         return
 	}

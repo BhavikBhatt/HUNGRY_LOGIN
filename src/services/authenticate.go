@@ -4,9 +4,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"context"
+	"models"
 )
 
-type MongoFields struct {
+type User struct {
     Username string `json:"Field Str"`
 	Ciphertext string `json:"Field Str"`
 	Email string `json:"Field Str"`
@@ -14,9 +15,9 @@ type MongoFields struct {
 	Age int `json:"Field Int"`
 }
 
-func Authenticate(ctx context.Context, users *mongo.Collection, username string, password string) (res MongoFields) {
+func Authenticate(ctx context.Context, users *mongo.Collection, username string, password string) (res models.User) {
 
-	result := MongoFields{}
+	result := models.User{}
 
 	filterCursor := users.FindOne(ctx, bson.M{"username": username}).Decode(&result)
 	_ = filterCursor
@@ -26,10 +27,10 @@ func Authenticate(ctx context.Context, users *mongo.Collection, username string,
 		if string(resultpass) == password {
 			res = result
 		} else {
-			res = MongoFields{}
+			res = models.User{}
 		}	
 	} else {
-		res = MongoFields{}
+		res = models.User{}
 	}
 
 	return

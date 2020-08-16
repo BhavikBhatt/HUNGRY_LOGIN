@@ -2,22 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
   </head>
@@ -32,6 +16,9 @@
           <input type="number" name="age" class="age" placeholder="Age" required="required" />
           <button type="submit" class="btn btn-primary btn-block btn-large" onclick="toggleText()">Sign me up!</button>
           <p id='created' style='display: none'>Account created! Redirecting to login page...</p>
+      </form>
+      <form>
+        <button id="backtologin" class="btn" formaction="index.html">Log In</button>
       </form>
   </div>
 <script>
