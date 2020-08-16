@@ -17,7 +17,7 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
 
 ### Create a new user
 1. Click the `New User?` button on the main login page
-2. Fill out the new user form and click `Sign me up!` (should redirect to login page) *cannot create an existing username
+2. Fill out the new user form and click `Sign me up!` (should redirect to login page) *cannot create an existing username*
 3. Try logging in with the new account
 4. You can also check the new.log file to see the details of the added user
 
