@@ -36,4 +36,12 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
   * password: hartkevin41
 
 
+# Just some screenshots of UI :)
+
 ![User model shown in MongoDB Atlas UI](https://github.com/BhavikBhatt/HUNGRY_LOGIN/blob/master/pkg/Screen%20Shot%202020-08-15%20at%2010.30.52%20PM.png)
+
+![Login Page](https://github.com/BhavikBhatt/HUNGRY_LOGIN/blob/master/pkg/Screen%20Shot%202020-08-16%20at%204.41.43%20PM.png)
+
+![Create Account Page](https://github.com/BhavikBhatt/HUNGRY_LOGIN/blob/master/pkg/Screen%20Shot%202020-08-16%20at%204.41.48%20PM.png)
+
+![Response from Login](https://github.com/BhavikBhatt/HUNGRY_LOGIN/blob/master/pkg/Screen%20Shot%202020-08-16%20at%204.42.30%20PM.png)
