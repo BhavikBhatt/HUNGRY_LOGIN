@@ -7,7 +7,8 @@ import (
     "net/http"
     "context"
     "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson"
 	"services"
 	"strconv"
 	"time"
@@ -86,7 +87,16 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 		Name: name,
 		Age: intage,
 	}
+
+	result := models.User{}
+	filterCursor := usersCollection.FindOne(ctx, bson.M{"username": username}).Decode(&result)
+	_ = filterCursor
 	
+	if filterCursor == nil {
+		fmt.Fprintf(w, "Username already exists!\n")
+		fmt.Fprintf(w, "Go back to create a unique account.\n")
+		return
+	}
 	res, err := usersCollection.InsertOne(ctx, newUser)
 	if err != nil {
 		fmt.Println("InsertOne ERROR:", err)
@@ -113,7 +123,6 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	_ = res
 
 }
-
 
 func main() {
 
