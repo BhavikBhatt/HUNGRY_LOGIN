@@ -22,10 +22,6 @@ This is a login webapp created with a Mongo-backed Go web server. Authentication
 
 
 
-
-
-
-
 #### User 1
   * username: bhavikbhatt
   * password: bhattbhavik23
