@@ -2,7 +2,7 @@
 
 ## My first go at Go!
 
-This is a login webapp created with a Mongo-backed Go web server. Authentication is supported by AES encryption/decryption. User objects are stored in a MongoDB Atlas database. An example of the current database is shown below in a screenshot. Logging is also implemented - so login attempts and new account creation events are recorded. The instructions to start the server are below, along with a few accounts that are already created. 
+This is a login webapp created with a Mongo-backed Go web server. Secure password authentication is supported by AES encryption/decryption. User objects are stored in a MongoDB Atlas database. An example of the current database is shown below in a screenshot. Logging is also implemented - so login attempts and new account creation events are recorded. The instructions to start the server are below, along with a few accounts that are already created. 
 
 ### *Uses secure Password Authentication method*
 ### Local Workspace Setup
